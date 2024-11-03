@@ -15,19 +15,23 @@ We will examine how users rate beers by:
 * Segmenting users by location to identify where the two ranking sites are most popular. We will analyze:
     * The number of reviews and ratings submitted by users on each site per country (usage information).
     * The number of users per country (popularity information).
-* 
-* 
-* 
+* Extracting user preferences for each geographical location based on their ratings and reviews.
+* Utilizing the collected data to track changes in the evaluation of the same beer over time. This will help us determine whether fluctuations in ratings are due to issues with the beer itself or changes in timing.
+* Using rating and review information to understand beer users’ preferences (we need to process this kind of text data in some way to extract some form of rating for that)
 
+### 2.2 Breweries Analysis
 
+We will investigate the locations of breweries to understand distribution patterns, which will enhance our insights from the users' analysis.
+### 2.3	Beers Analysis
 
-
-### How to use the library
-Tell us how the code is arranged, any explanations goes here.
-
+We will correlate beer scores obtained from users to the geographical locations of breweries, providing a clearer context for interpreting the data.
 
 
 ## Project Structure
+
+
+
+## Repository Structure
 
 The directory structure of new project looks like this:
 
