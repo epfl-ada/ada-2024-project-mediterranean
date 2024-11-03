@@ -1,22 +1,24 @@
-# Your project name
-This is a template repo for your project to help you organise and document your code better. 
-Please use this structure for your project and document the installation, usage and structure as below.
+# User Taste Analysis by Demographics
 
-## Quickstart
+Our goal is to investigate the correlation between beer preferences and user demographics, such as age, gender, and location. Specifically, we aim to explore generational trends in beer tastes and flavor preferences. However, a challenge we face is the lack of access to users' age and gender information. To adapt our analysis, we propose the following approaches:
 
-```bash
-# clone project
-git clone <project link>
-cd <project repo>
+## 1. Demographic Analysis
 
-# [OPTIONAL] create conda environment
-conda create -n <env_name> python=3.11 or ...
-conda activate <env_name>
+We will conduct a demographic study to analyze user distribution and clustering, aiming to determine whether the success of a beer is influenced by demographic factors and temporal changes. This approach allows us to circumvent the need for specific age and gender data.
 
+## 2. Analysis Objectives
 
-# install requirements
-pip install -r pip_requirements.txt
-```
+### 2.1 Users Analysis
+
+We will examine how users rate beers by:
+
+* Segmenting users by location to identify where the two ranking sites are most popular. We will analyze:
+    * The number of reviews and ratings submitted by users on each site per country (usage information).
+    * The number of users per country (popularity information).
+* 
+* 
+* 
+
 
 
 
