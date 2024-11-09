@@ -220,3 +220,17 @@ def comparing_plot(dist_BA, dist_RB, dist_us_BA, dist_us_RB,n=15):
 
     return None
 
+
+
+def location_into_loc_region(dataset):
+    """_summary_
+
+    Args:
+        dataset (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    dataset[['location', 'location_region']] = dataset['location'].str.split(',', n=1, expand=True)
+
+    return dataset
