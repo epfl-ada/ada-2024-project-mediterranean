@@ -46,6 +46,45 @@ def ensure_col_types(dataset, cols_int, cols_float, cols_string):
     dataset[cols_string]  = dataset[cols_string].astype(str)
     return None
 
+def ensure_col_types2(dataset, cols_int, cols_float, cols_string):
+    """
+    Ensures that specified columns in the dataset have the correct data types.
+    
+    Args:
+        dataset (pandas.DataFrame): The DataFrame to process.
+        cols_int (list): List of columns to convert to integers.
+        cols_float (list): List of columns to convert to floats.
+        cols_string (list): List of columns to convert to strings.
+    
+    Returns:
+        pandas.DataFrame: The updated DataFrame with corrected column types.
+    """
+    # Convert columns to integer, handling errors
+    for col in cols_int:
+        if col in dataset.columns:
+            try:
+                dataset[col] = pd.to_numeric(dataset[col], errors='coerce').astype('Int64')
+            except Exception as e:
+                print(f"Error converting {col} to int: {e}")
+
+    # Convert columns to float, handling errors
+    for col in cols_float:
+        if col in dataset.columns:
+            try:
+                dataset[col] = pd.to_numeric(dataset[col], errors='coerce').astype(float)
+            except Exception as e:
+                print(f"Error converting {col} to float: {e}")
+
+    # Convert columns to string, handling errors
+    for col in cols_string:
+        if col in dataset.columns:
+            try:
+                dataset[col] = dataset[col].astype(str)
+            except Exception as e:
+                print(f"Error converting {col} to string: {e}")
+
+    return dataset
+
 
 def write_csv_into_directory(output_dir, output_file, dataset):
     """_summary_
