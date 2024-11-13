@@ -273,3 +273,15 @@ def location_into_loc_region(dataset):
     dataset[['location', 'location_region']] = dataset['location'].str.split(',', n=1, expand=True)
 
     return dataset
+
+def update_location_and_region(dataset):
+    uk_regions = ['England', 'Scotland', 'Wales', 'Northern Ireland']
+    
+    # Check if the location is part of the UK regions
+    for i in range(len(dataset)):
+        region=dataset.loc[i,'location']
+        if region in uk_regions:
+            dataset.loc[i,'location'] = 'United Kingdom'  # Set the location to 'UK'
+            dataset.loc[i,'location_region'] = region  # Set the region to the specific UK region
+
+    return dataset
