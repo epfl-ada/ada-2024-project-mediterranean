@@ -49,7 +49,6 @@ _Preprocessing Steps:_
 _Outcome_: A clean, balanced dataset ready for temporal and demographic analysis.
 
 **TASK 3: The Awards Begin - Identifying Annual and Continental Favorites**
-## Repository Structure
 
 _Approach_: Aggregate and rank beers by year, continent, and globally based on user ratings.
 
