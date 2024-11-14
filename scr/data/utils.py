@@ -197,6 +197,9 @@ def plot_user_per_location_per_time_cumulative(table_users, dataset_name, n=10):
 
 # Information of the brewer dataset considered and check on id
 def dataset_information(breweries, dataset):
+    """
+    This function work only for breweries, we need to change it to make it work on all
+    """
     print('\n')
     print('########################################################')
     print('We are starting analysing dataset', dataset)
@@ -252,10 +255,7 @@ def us_extraction(breweries, dataset):
 # - mean of beers we have for each contry in every breweries
 # - std of beers we have for each contry median of beers we have for each contry in every breweries ###
 # - median of beers we have for each contry in every breweries
-def loc_distribution(breweries, dataset, groupping_column): #AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    # we uniform the values in column location
-    #breweries['location'] = breweries['location'].apply(clean_location) #filter function
-    #breweries = clean_unfitt_data(breweries) #filter function
+def loc_distribution(breweries, dataset, groupping_column):
     print('Dataset:', dataset)
     print('- Number of unique "location" value in the dataset:', breweries['location'].nunique())
     distribution = breweries.groupby(groupping_column).agg(
@@ -333,3 +333,15 @@ def comparing_plot(dist_BA, dist_RB, dist_us_BA, dist_us_RB,n=15):
         sbplt.tick_params(axis='y', labelsize=12) 
 
     return None
+
+def update_location_and_region(dataset):
+    uk_regions = ['England', 'Scotland', 'Wales', 'Northern Ireland']
+    
+    # Check if the location is part of the UK regions
+    for i in range(len(dataset)):
+        region=dataset.loc[i,'location']
+        if region in uk_regions:
+            dataset.loc[i,'location'] = 'United Kingdom'  # Set the location to 'UK'
+            dataset.loc[i,'location_region'] = region  # Set the region to the specific UK region
+
+    return dataset
