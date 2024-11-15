@@ -94,7 +94,7 @@ _Outcome_: Engaging, accessible visualizations that display the evolution of bee
 ## Proposed timeline
 
 - **15.11.2024** – Homework 2
-- **22.11.2024** – Task 2 and Task 3
+- **22.11.2024** – Task 3
 - **29.11.2024** – Task 4
 - **06.12.2024** – Task 4
 - **13.12.2024** – Task 5
