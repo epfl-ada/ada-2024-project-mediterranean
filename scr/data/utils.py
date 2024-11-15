@@ -48,7 +48,7 @@ def nbr_user_per_location_per_time(users, dataset_name):
     return user_distribution_by_year_location
 
 # This function create a plot that show for a single location the evolution of subscription during years
-def time_machine(table_users, dataset_name, location, color='b'):
+def time_machine(table_users, dataset_name, location, color='b', scale='linear'):
     """
         table_users  =  is the table that has yeas as index and location as columns. 
                         In every cell we have the number of user for each location per year
@@ -56,10 +56,12 @@ def time_machine(table_users, dataset_name, location, color='b'):
         dataset_name =  name of the dataset
         location     =  the location we want to visualize (the column of the table)
         color        =  the color that I prefere for the plot
+        scale        =  the scale you prefer for the plotting
         output = plot that show how the subscription change over time for that site and for that country
     """
     plt.plot(table_users.index, table_users[location],marker='o', color=color, linestyle='-', label=f'Cumulative annual memberships of {location}')
-    # Aggiungi etichette e titolo
+    plt.yscale(scale)
+    # Add title and labels
     plt.title(f'Trend of annual site registrations in dataset {dataset_name}')
     plt.xlabel('Years')
     plt.legend()
@@ -191,6 +193,29 @@ def plot_user_per_location_per_time_cumulative(table_users, dataset_name, n=10):
     # Step 6: Show the plot
     plt.show()
     return location_order[:n]
+
+def find_top_n(table_users, n=7):
+    """
+    This function returns the locations that have been in the top-n for the number of users across all the years stored in the database.
+    """
+    years = table_users.index.tolist()
+    # Step 1: Count how many times each location appears in the top-N of each year
+    top_n_locations_count = Counter()
+    # Iterate over the years and count top-N locations
+    for year in years:
+        # Get the top-n locations for this year (exclude 'Total' column)
+        data = table_users.loc[year].drop('Total')
+        top_n = data.nlargest(n).index  # Get the top-N locations for the current year
+        top_n_locations_count.update(top_n)  # Update the count for these locations
+        
+    # Step 2: Sort locations based on their frequency (most frequent locations first)
+    location_order = [location for location, count in top_n_locations_count.most_common()]
+    location_order = location_order[:n]
+    # Print the top-N locations sorted
+    print(f"Top {n} locations: {list(location_order[:n])}")
+    return location_order
+
+
 ################
 # BREWER BLOCK #
 ################
@@ -256,6 +281,9 @@ def us_extraction(breweries, dataset):
 # - std of beers we have for each contry median of beers we have for each contry in every breweries ###
 # - median of beers we have for each contry in every breweries
 def loc_distribution(breweries, dataset, groupping_column):
+    """
+    This function return a dataframe in which we have statistical analysis about breweries 
+    """
     print('Dataset:', dataset)
     print('- Number of unique "location" value in the dataset:', breweries['location'].nunique())
     distribution = breweries.groupby(groupping_column).agg(
@@ -273,25 +301,25 @@ def loc_distribution(breweries, dataset, groupping_column):
 # countries. We can visualize the standard deviation and also the mean
 # number of beer in brewer for each country
 
-def plotting_dist(dist, dataset, n=15):   
+def plotting_dist(dist, dataset, n=15, location='location'):   
     # Select only the first n (to make the plot readable)
     dist_bar = dist.sort_values(by='brewery_count', ascending=False).head(n)
     fig, ax = plt.subplots(figsize=(10, 8))
     
-    ax.barh(dist_bar['location'], dist_bar['brewery_count'], color='skyblue',label='Number of breweries')
+    ax.barh(dist_bar[location], dist_bar['brewery_count'], color='skyblue',label='Number of breweries')
     ax.set_title(f'Number of breweries for each country {dataset} dataset - top {n}', fontsize=15)
     ax.set_xlabel('Number of Breweries', fontsize=15)
     ax.set_ylabel('Country', fontsize=15)
     ax.tick_params(axis='x', labelsize=12)  # Tick dimension
     ax.tick_params(axis='y', labelsize=12)  
-    plt.errorbar(dist_bar['brewery_count'], dist_bar['location'], 
+    plt.errorbar(dist_bar['brewery_count'], dist_bar[location], 
                  xerr=dist_bar['std_beers'],  # std
                  fmt='o', 
                  color='orange',  
                  label='Standard Deviation',  
                  capsize=5)  
     # Make the table
-    table_data = dist_bar[['location', 'mean_beers']]
+    table_data = dist_bar[[location, 'mean_beers']]
     table_data['mean_beers']=round(table_data['mean_beers'],2) # We round the data for a better readability
     table = ax.table(cellText=table_data.values,
                      colLabels=table_data.columns,
@@ -305,23 +333,25 @@ def plotting_dist(dist, dataset, n=15):
     table.scale(1, 1.5) 
     plt.show()
 
-def comparing_plot(dist_BA, dist_RB, dist_us_BA, dist_us_RB,n=15):
+def comparing_plot(dist_BA, dist_RB, dist_us_BA, dist_us_RB,n=15, location='location', location_region='location_region'):
     dist_BA_bar = dist_BA.sort_values(by='brewery_count', ascending=False).head(n)
     dist_RB_bar = dist_RB.sort_values(by='brewery_count', ascending=False).head(n)
     dist_us_BA_bar = dist_us_BA.sort_values(by='brewery_count', ascending=False).head(n)
     dist_us_RB_bar = dist_us_RB.sort_values(by='brewery_count', ascending=False).head(n)
     dataset_bar = [dist_BA_bar, dist_RB_bar, dist_us_BA_bar, dist_us_RB_bar]
+    actual_loc = [location, location, location_region, location_region]
     title = ['BA COMPLETE DATASET', 'RB COMPLETE DATASET','BA US DATASET', 'RB US DATASET']
     
     i = 0
-    fig, ax = plt.subplots(2,2, figsize=(20,11),sharex=True)
+    fig, ax = plt.subplots(2,2, figsize=(20,17)) 
     for i in range(4):
         data = dataset_bar[i]
+        loc = actual_loc[i]
         sbplt = ax[i // 2, i % 2]
-        sbplt.barh(data['location'], data['brewery_count'], color='skyblue',label='Number of breweries')
+        sbplt.barh(data[loc], data['brewery_count'], color='skyblue',label='Number of breweries')
         sbplt.legend()
         sbplt.set_title(title[i], fontsize=15)
-        sbplt.errorbar(data['brewery_count'], data['location'], 
+        sbplt.errorbar(data['brewery_count'], data[loc], 
                      xerr=data['std_beers'],  # std
                      fmt='o', 
                      color='orange',  
