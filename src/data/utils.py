@@ -617,7 +617,6 @@ def tripe_hist_plot_beers(top_avg_beers, top_overall_beers, top_style_beers, tit
     axes[2].set_ylabel("")
 
     plt.tight_layout()
-    plt.title(title)
     plt.show()
 
 def tripe_hist_plot_beers_weighted(top_avg_beers, top_overall_beers, top_style_beers, title):
@@ -650,7 +649,6 @@ def tripe_hist_plot_beers_weighted(top_avg_beers, top_overall_beers, top_style_b
 
     # Adjust layout for better spacing
     plt.tight_layout()
-    plt.title(title)
     plt.show()
 
 def tripe_hist_plot_beers_weighted2(top_avg_beers, top_overall_beers, top_style_beers, title):
@@ -683,5 +681,4 @@ def tripe_hist_plot_beers_weighted2(top_avg_beers, top_overall_beers, top_style_
 
     # Adjust layout for better spacing
     plt.tight_layout()
-    plt.title(title)
     plt.show()
