@@ -30,7 +30,13 @@ We don't need any additional datasets.
 
 **TASK 1: Dataset Setup and Distribution Analysis**
 
-_Statistical Approach_: Perform a Kolmogorov-Smirnov test to compare distribution shapes and validate if the datasets can be merged. Normalize ratings with z score.
+_Statistical Approach_: Perform several test to compare distribution shapes and validate if the datasets can be merged.
+
+- **Shapiro-Wilk Test**: Performed to determine whether the distribution of the variable *'avg'* follows a normal distribution.  
+- **Q-Q Plots**: Used to visually assess the normality of the data.  
+- **Wilcoxon Test**: Conducted to evaluate whether two statistical samples come from the same population.  
+- **Kolmogorov-Smirnov (KS) Test**: Applied to compare the distributions of the two datasets and determine if they originate from the same distribution.  
+- **Levene's Test**: Performed to check if the variances of the two datasets are equal before applying parametric tests like t-test or ANOVA.  
 
 _Outcome_: A decision on merging data with normalized ratings and an understanding of dataset compatibility.
 
