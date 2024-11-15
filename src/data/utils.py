@@ -7,6 +7,8 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 import re
+import seaborn as sns
+import scipy.stats as stats
 
 
 def dataset_information(dataset, dataset_name):
@@ -285,3 +287,29 @@ def update_location_and_region(dataset):
             dataset.loc[i,'location_region'] = region  # Set the region to the specific UK region
 
     return dataset
+
+
+def plot_normality(data, title):
+    # Set up the figure and axes
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    
+    # Histogram
+    sns.histplot(data, kde=True, ax=axes[0])
+    axes[0].set_title(f"Histogram of {title}")
+    axes[0].set_xlabel('Value')
+    axes[0].set_ylabel('Frequency')
+    
+    # Q-Q plot
+    stats.probplot(data, dist="norm", plot=axes[1])
+    axes[1].set_title(f"Q-Q plot of {title}")
+    
+    # Box plot
+    sns.boxplot(data, ax=axes[2])
+    axes[2].set_title(f"Box plot of {title}")
+    
+    # Adjust layout
+    plt.tight_layout()
+    plt.show()
+
+    stat1, p1 = stats.shapiro(data)
+    print(f"Shapiro Test for Dataset 1: Statistic = {stat1}, p-value = {p1}")
