@@ -69,7 +69,7 @@ _NLP Techniques_: Implement NLP and topic modeling to identify common flavor des
 
 _Sentiment Analysis_: Measure sentiment for descriptive terms to capture preferences (e.g., “bitter” with positive sentiment indicating a preference).
 
-_Longitudinal analysis_:We aim to understand how the characteristics of the beer perceived as the favorite evolve over time, in order to determine whether there is a common direction in taste preferences or if there are clear territorial distinctions.
+_Longitudinal analysis_: We aim to understand how the characteristics of the beer perceived as the favorite evolve over time, in order to determine whether there is a common direction in taste preferences or if there are clear territorial distinctions.
 
 _Prediction evaluation_: It will also be valuable to assess whether the extracted data leads to meaningful insights, and if we can develop a system capable of predicting the organoleptic traits that users will seek in the next year’s favorite beer.
 
