@@ -101,10 +101,10 @@ _Outcome_: Engaging, accessible visualizations that display the evolution of bee
 
 We strongly believe in teamwork and feel that ten eyes are always better than two. Although there were specific divisions of tasks (outlined below), we want to emphasize that we all contributed to every part of the project, advising and correcting each other along the way.
 
-* **Chiara** - ReadMe, Task 2 and Task 3
-* **Vittoria** – Task 2 and Task 3
+* **Chiara** - ReadMe, Task 1 and Task 3
+* **Vittoria** – Task 2 and Task 3 (mainly)
 * **Jofre** – Task 3, Task 4 and Task 5
-* **Jon** – Task 1 and Task 2
+* **Jon** – Task 1 (mainly) and Task 2
 * **Ari** – Task 1, Task 2 and Task 3
 
 ## **Repository structure**
