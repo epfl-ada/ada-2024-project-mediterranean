@@ -93,6 +93,18 @@ def ensure_col_types2(dataset, cols_int, cols_float, cols_string):
 
     return dataset
 
+def calculate_style_score(row, style_mean, m, c):
+    N = row['nbr_ratings']
+    avg = row['avg_scaled']
+    C = style_mean[row['style']] if row['style'] in style_mean else c
+    return np.round((N / (N + m)) * avg + (m / (N + m)) * C,2)
+
+def calculate_overall_score(row, c, m):
+    N = row['nbr_ratings']
+    avg = row['avg_scaled']
+    C = c
+    return np.round((N / (N + m)) * avg + (m / (N + m)) * C,2)
+
 
 def write_csv_into_directory(output_dir, output_file, dataset):
     """_summary_
