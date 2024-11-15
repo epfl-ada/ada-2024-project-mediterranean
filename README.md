@@ -33,8 +33,7 @@ We don't need any additional datasets.
 _Statistical Approach_: Perform several test to compare distribution shapes and validate if the datasets can be merged.
 
 - **Shapiro-Wilk Test**: Performed to determine whether the distribution of the variable *'avg'* follows a normal distribution.  
-- **Q-Q Plots**: Used to visually assess the normality of the data.  
-- **Wilcoxon Test**: Conducted to evaluate whether two statistical samples come from the same population.  
+- **Q-Q Plots**: Used to visually assess the normality of the data.   
 - **Kolmogorov-Smirnov (KS) Test**: Applied to compare the distributions of the two datasets and determine if they originate from the same distribution.  
 - **Levene's Test**: Performed to check if the variances of the two datasets are equal before applying parametric tests like t-test or ANOVA.  
 
