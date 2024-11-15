@@ -96,9 +96,8 @@ _Outcome_: Engaging, accessible visualizations that display the evolution of bee
 - **29.11.2024** – Task 4 
 - **15.12.2024** – Task 5
 
-<<<<<<< HEAD
+
 ## **Organization within the team**
->>>>>>> 948b5ee79298f170598fa29f7b67e5253c754f7d
 
 We strongly believe in teamwork and feel that ten eyes are always better than two. Although there were specific divisions of tasks (outlined below), we want to emphasize that we all contributed to every part of the project, advising and correcting each other along the way.
 
@@ -129,7 +128,5 @@ The **current** directory structure of new project looks like this:
 
 ```
 
-<<<<<<< HEAD
-=======
 ## Questions for TAs
->>>>>>> 948b5ee79298f170598fa29f7b67e5253c754f7d
+
