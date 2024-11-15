@@ -34,7 +34,7 @@ _Statistical Approach_: Perform a Kolmogorov-Smirnov test to compare distributio
 
 _Outcome_: A decision on merging data with normalized ratings and an understanding of dataset compatibility.
 
->If the K-S test and visual inspection reveal comparable distributions, we can confidently merge the datasets with normalized scores. If differences are notable, you could choose to keep the datasets separate and conduct analyses within each before combining higher-level results. 
+>If the K-S test and visual inspection reveal comparable distributions, we can confidently merge the datasets with normalized scores. If differences are notable, we could choose to keep the datasets separate and conduct analyses within each before combining higher-level results. 
 
 **TASK 2: Bias Identification and Preprocessing**
 
