@@ -28,7 +28,20 @@ We don't need any additional datasets.
 
 ## **Methods**
 
-**TASK 1: Dataset Setup, processing steps and initial data characteristics**
+**TASK 1: Data Pre-processing**
+
+_Preprocessing Steps:_
+* Duplicate removal, handling NaN values, and standardizing data formats.
+* Location of beers, breweries and users corrections.
+* Recomputation of beers ratings metrics to overcome high percentage of NaN values.
+
+_Possibility of beer ratings mergings_: Normality, distribution and different statistical tests on wether merging beers ratings could be carried out.
+
+_Data charactersitics_: intial analysis on how data is distributed in the different datasets. Choices on 
+
+_Outcome_: Clean, balanced datasets ready for temporal and demographic analysis. Decision on wether merging beers data is possible along RateBeer and BeerAdvocate.
+
+**TASK 2: Datasets distribution analysis**
 
 <<<<<<< HEAD
 Data from RateBeer and BeerAdvocate need to be processed to ensure correctness and organized flow of work. All work saved in `src/data`.
@@ -44,25 +57,7 @@ _Outcome_: A decision on merging data with normalized ratings and an understandi
 
 >If the tests and visual inspections reveal comparable distributions, we can confidently merge the datasets with normalized scores. If differences are notable, we could choose to keep the datasets separate and conduct analyses within each before combining higher-level results. 
 
-**TASK 2: Bias Identification and Preprocessing**
-
-To conduct a high-quality analysis, it's crucial to recognize when our perspective is limited or skewed. 
-
-_Bias Check_: Analyze brewery and user distributions to identify any geographic, cultural, or temporal biases in reviews. Adjust for regional overrepresentation in final analysis.
->>>>>>> 948b5ee79298f170598fa29f7b67e5253c754f7d
-
-_Preprocessing Steps:_
-* Duplicate removal, handling NaN values, and standardizing data formats.
-* Location of beers, breweries and users corrections.
-* Recomputation of beers ratings metrics to overcome high percentage of NaN values.
-
-_Possibility of beer ratings mergings_: Normality, distribution and different statistical tests on wether merging beers ratings could be carried out.
-
-_Data charactersitics_: intial analysis on how data is distributed in the different datasets. Choices on 
-
-_Outcome_: Clean, balanced datasets ready for temporal and demographic analysis. Decision on wether merging beers data is possible along RateBeer and BeerAdvocate.
-
-**TASK 2: The Awards Begin - Identifying Annual and Continental Favorites**
+**TASK 3: The Awards Begin - Identifying Annual and Continental Favorites**
 
 _Approach_: Aggregate and rank beers by year, continent, and globally based on user ratings.
 
@@ -75,7 +70,7 @@ _Subtasks_:
 
 _Outcome_: A structured dataset of top-rated beers annually and by continent.
 
-**TASK 3: Aromatic Characteristics Extraction**
+**TASK 4: Aromatic Characteristics Extraction**
 
 _NLP Techniques_: Implement NLP and topic modeling to identify common flavor descriptors from reviews in order to extract valuable characteristics for their aromatic profiling.
 
