@@ -35,15 +35,13 @@ _Preprocessing Steps:_
 * Location of beers, breweries and users corrections.
 * Recomputation of beers ratings metrics to overcome high percentage of NaN values.
 
-_Possibility of beer ratings mergings_: Normality, distribution and different statistical tests on wether merging beers ratings could be carried out.
+_Data charactersitics_: intial analysis on how data is distributed in the different datasets. 
 
-_Data charactersitics_: intial analysis on how data is distributed in the different datasets. Choices on 
-
-_Outcome_: Clean, balanced datasets ready for temporal and demographic analysis. Decision on wether merging beers data is possible along RateBeer and BeerAdvocate.
+_Outcome_: Clean, balanced datasets ready for temporal and demographic analysis. 
 
 **TASK 2: Datasets distribution analysis**
 
-Data from RateBeer and BeerAdvocate need to be processed to ensure correctness and organized flow of work. All work saved in `src/data`.
+Data from RateBeer and BeerAdvocate need to be processed to ensure correctness and organized flow of work. All work saved in `src/data`. The question now is if the two datasets can be merged or not.
 
 _Statistical Approach_: Perform several test to compare distribution shapes and validate if the datasets can be merged.
 
