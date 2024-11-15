@@ -10,7 +10,7 @@ By analyzing emerging trends, we seek to forecast which aromas and styles will d
 
 ## **Research questions**
 
-* **How are users and breweries distributed in the datasets we are analyzing?** It's important to consider this distribution when weighing and interpreting the results of the analysis.
+* **How are users and breweries distributed in the datasets we are analyzing?** It's important to consider this distribution when weigthing and interpreting the results of the analysis.
 
 * **What is the top-rated beer each year for each continent, and which beer ranks as the global favorite?**
 
@@ -24,13 +24,32 @@ By analyzing emerging trends, we seek to forecast which aromas and styles will d
 
 ## **Additional datasets**
 
-We don't need any additional datasets; rather, it may be necessary to look into the production location of the beer to answer the last research question.
+We don't need any additional datasets.
 
 ## **Methods**
 
 **TASK 1: Dataset Setup, processing steps and initial data characteristics**
 
+<<<<<<< HEAD
 Data from RateBeer and BeerAdvocate need to be processed to ensure correctness and organized flow of work. All work saved in `src/data`.
+=======
+_Statistical Approach_: Perform several test to compare distribution shapes and validate if the datasets can be merged.
+
+- **Shapiro-Wilk Test**: Performed to determine whether the distribution of the variable *'avg'* follows a normal distribution.  
+- **Q-Q Plots**: Used to visually assess the normality of the data.   
+- **Kolmogorov-Smirnov (KS) Test**: Applied to compare the distributions of the two datasets and determine if they originate from the same distribution.  
+- **Levene's Test**: Performed to check if the variances of the two datasets are equal before applying parametric tests like t-test or ANOVA.  
+
+_Outcome_: A decision on merging data with normalized ratings and an understanding of dataset compatibility.
+
+>If the tests and visual inspections reveal comparable distributions, we can confidently merge the datasets with normalized scores. If differences are notable, we could choose to keep the datasets separate and conduct analyses within each before combining higher-level results. 
+
+**TASK 2: Bias Identification and Preprocessing**
+
+To conduct a high-quality analysis, it's crucial to recognize when our perspective is limited or skewed. 
+
+_Bias Check_: Analyze brewery and user distributions to identify any geographic, cultural, or temporal biases in reviews. Adjust for regional overrepresentation in final analysis.
+>>>>>>> 948b5ee79298f170598fa29f7b67e5253c754f7d
 
 _Preprocessing Steps:_
 * Duplicate removal, handling NaN values, and standardizing data formats.
@@ -62,7 +81,7 @@ _NLP Techniques_: Implement NLP and topic modeling to identify common flavor des
 
 _Sentiment Analysis_: Measure sentiment for descriptive terms to capture preferences (e.g., “bitter” with positive sentiment indicating a preference).
 
-_Longitudinal analysis_:We aim to understand how the characteristics of the beer perceived as the favorite evolve over time, in order to determine whether there is a common direction in taste preferences or if there are clear territorial distinctions.
+_Longitudinal analysis_: We aim to understand how the characteristics of the beer perceived as the favorite evolve over time, in order to determine whether there is a common direction in taste preferences or if there are clear territorial distinctions.
 
 _Prediction evaluation_: It will also be valuable to assess whether the extracted data leads to meaningful insights, and if we can develop a system capable of predicting the organoleptic traits that users will seek in the next year’s favorite beer.
 
@@ -83,7 +102,17 @@ _Outcome_: Engaging, accessible visualizations that display the evolution of bee
 - **29.11.2024** – Task 3
 - **15.12.2024** – Task 4
 
+<<<<<<< HEAD
 ## **Organization within the team**
+=======
+- **15.11.2024** – Homework 2
+- **22.11.2024** – Task 3
+- **29.11.2024** – Task 4
+- **06.12.2024** – Task 4
+- **13.12.2024** – Task 5
+
+## Organization within the team
+>>>>>>> 948b5ee79298f170598fa29f7b67e5253c754f7d
 
 We strongly believe in teamwork and feel that ten eyes are always better than two. Although there were specific divisions of tasks (outlined below), we want to emphasize that we all contributed to every part of the project, advising and correcting each other along the way.
 
@@ -110,3 +139,7 @@ The **current** directory structure of new project looks like this:
 └── README.md
 ```
 
+<<<<<<< HEAD
+=======
+## Questions for TAs
+>>>>>>> 948b5ee79298f170598fa29f7b67e5253c754f7d
