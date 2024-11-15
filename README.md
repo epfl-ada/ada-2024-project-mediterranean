@@ -107,6 +107,24 @@ We strongly believe in teamwork and feel that ten eyes are always better than tw
 * **Jon** – Task 1 (mainly) and Task 2
 * **Vittoria** – Task 2 and Task 3 (mainly)
 
+## Requirements
+
+The project requires the following Python libraries to be installed:
+
+- `pandas`: Data manipulation and analysis.
+- `numpy`: Numerical computing.
+- `matplotlib`: Data visualization.
+- `seaborn`: Statistical data visualization.
+- `scipy`: Scientific and statistical computing.
+- `plotly`: Interactive data visualization.
+- `geopandas`: Geospatial data analysis.
+
+To install these dependencies, you can use the provided `requirements.txt` file. Run the following command in your terminal:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## **Repository structure**
 
 The **current** directory structure of new project looks like this:
