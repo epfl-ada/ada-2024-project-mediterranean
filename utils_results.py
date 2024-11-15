@@ -13,4 +13,3 @@ def calculate_weighted_avg(row, global_mean,m):
     n = row['nbr_ratings']
     avg = row['avg']
     return np.round(((avg*n)+ (global_mean*m))/(n+m),3)
-
