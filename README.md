@@ -1,6 +1,6 @@
 # Global Beer Trends: Demographic Analysis and Flavor Evolution Across Continents
 
-## Abstract
+## **Abstract**
 
 Our tastes reveal much about who we are and the story we carry with us. That’s why we aim to present a **demographic and temporal analysis of beer preferences**. We want to investigate how consumer preferences for beer shift year by year on both a continental and global scale. Our goal is to identify the top-ranked beers worldwide and to capture their unique flavor profiles through user reviews. Ultimately, we aim to understand the long-term evolution of taste preferences and predict the defining traits of future favorites. For this study, we will use data from the datasets: BeerAdvocate and RateBeer.
 
@@ -8,7 +8,7 @@ By analyzing emerging trends, we seek to forecast which aromas and styles will d
 
 > ### A journey through the world’s flavors, uncovering the beer trends that will define tomorrow!
 
-## Research questions
+## **Research questions**
 
 * **How are users and breweries distributed in the datasets we are analyzing?** It's important to consider this distribution when weighing and interpreting the results of the analysis.
 
@@ -22,33 +22,28 @@ By analyzing emerging trends, we seek to forecast which aromas and styles will d
 
 * **Are beer drinkers patriotic?** Is the preferred beer of a continent typically a local brew? Is there a correlation, and if so, is it statistically significant or just a coincidence?
 
-## Additional datasets
+## **Additional datasets**
 
 We don't need any additional datasets; rather, it may be necessary to look into the production location of the beer to answer the last research question.
 
-## Methods
+## **Methods**
 
-**TASK 1: Dataset Setup and Distribution Analysis**
+**TASK 1: Dataset Setup, processing steps and initial data characteristics**
 
-_Statistical Approach_: Perform a Kolmogorov-Smirnov test to compare distribution shapes and validate if the datasets can be merged. Normalize ratings with z score.
-
-_Outcome_: A decision on merging data with normalized ratings and an understanding of dataset compatibility.
-
->If the K-S test and visual inspection reveal comparable distributions, we can confidently merge the datasets with normalized scores. If differences are notable, you could choose to keep the datasets separate and conduct analyses within each before combining higher-level results. 
-
-**TASK 2: Bias Identification and Preprocessing**
-
-To conduct a high-quality analysis, it's crucial to recognize when our perspective is limited or skewed. 
-
-_Bias Check_: Analyze brewery and user distributions to identify any geographic, cultural, or temporal biases in reviews. Adjust for regional overrepresentation in final analysis.
+Data from RateBeer and BeerAdvocate need to be processed to ensure correctness and organized flow of work. All work saved in `src/data`.
 
 _Preprocessing Steps:_
 * Duplicate removal, handling NaN values, and standardizing data formats.
-* User registration trend analysis to account for any shifts in user demographics over time, potentially introducing a weighted adjustment for recent years.
+* Location of beers, breweries and users corrections.
+* Recomputation of beers ratings metrics to overcome high percentage of NaN values.
 
-_Outcome_: A clean, balanced dataset ready for temporal and demographic analysis.
+_Possibility of beer ratings mergings_: Normality, distribution and different statistical tests on wether merging beers ratings could be carried out.
 
-**TASK 3: The Awards Begin - Identifying Annual and Continental Favorites**
+_Data charactersitics_: intial analysis on how data is distributed in the different datasets. Choices on 
+
+_Outcome_: Clean, balanced datasets ready for temporal and demographic analysis. Decision on wether merging beers data is possible along RateBeer and BeerAdvocate.
+
+**TASK 2: The Awards Begin - Identifying Annual and Continental Favorites**
 
 _Approach_: Aggregate and rank beers by year, continent, and globally based on user ratings.
 
@@ -57,13 +52,11 @@ _Approach_: Aggregate and rank beers by year, continent, and globally based on u
 _Subtasks_:
 * Individual analysis on beers, breweries, users and ratings. On beers:
 
-*photo*
-
 * Comparing result from the two datasets for deeper analysis
 
 _Outcome_: A structured dataset of top-rated beers annually and by continent.
 
-**TASK 4: Aromatic Characteristics Extraction**
+**TASK 3: Aromatic Characteristics Extraction**
 
 _NLP Techniques_: Implement NLP and topic modeling to identify common flavor descriptors from reviews in order to extract valuable characteristics for their aromatic profiling.
 
@@ -75,7 +68,7 @@ _Prediction evaluation_: It will also be valuable to assess whether the extracte
 
 _Outcome_: A database of characteristic descriptors for the preferred beer, grouped by year and region, with sentiment context.
 
-**Task 5: Make it visible!**
+**Task 4: Make it visible!**
 
 _Visualization Tools_: Consider tools like Tableau, Plotly, or D3.js for rich, interactive visualizations. Geographic visualizations can depict beer preferences by region and allow users to interact with data by year or flavor profile.
 
@@ -83,40 +76,32 @@ _Outcome_: Engaging, accessible visualizations that display the evolution of bee
 
 >Taking a small journey through the preferred tastes in different locations around the world!
 
-*photo*
+## **Proposed timeline**
 
-## Proposed timeline
+- **15.11.2024** – Homework 2 and Task 1
+- **22.11.2024** – Task 2
+- **29.11.2024** – Task 3
+- **15.12.2024** – Task 4
 
-- **15.11.2024** – Homework 2
-- **22.11.2024** – Task 2 and Task 3
-- **29.11.2024** – Task 4
-- **06.12.2024** – Task 4
-- **13.12.2024** – Task 5
-
-## Organization within the team
+## **Organization within the team**
 
 We strongly believe in teamwork and feel that ten eyes are always better than two. Although there were specific divisions of tasks (outlined below), we want to emphasize that we all contributed to every part of the project, advising and correcting each other along the way.
 
-* **Chiara** - ReadMe and Task 2
-* **Vittoria** – Task 1 and Task 4
-* **Jofre** – Task 5
-* **Jon** – Task 1 and Task 3
-* **Ari** – Task 4
+* **Chiara** - ReadMe and Task 3
+* **Vittoria** – Task 1 and Task 3
+* **Jofre** – Task 1 and Task 4
+* **Jon** – Task 1 and Task 2
+* **Ari** – Task 1 and Task 3
 
-## Repository structre
+## **Repository structure**
 
-The directory structure of new project looks like this:
+The **current** directory structure of new project looks like this:
 
 ```
-├── data                        <- Project data files: drive links
+├── data                        <- Project data files (too big for GitHub)
 │
 ├── src                         <- Source code
 │   ├── data                            <- Data directory: processings notebooks
-│   ├── models                          <- Model directory
-│   ├── utils                           <- Utility directory
-│   ├── scripts                         <- Shell scripts
-│
-├── tests                       <- Tests of any kind
 │
 ├── results.ipynb               <- initial analysis and results obtained
 │
@@ -125,4 +110,3 @@ The directory structure of new project looks like this:
 └── README.md
 ```
 
-## Questions for TAs
