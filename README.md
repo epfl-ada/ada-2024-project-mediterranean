@@ -56,14 +56,16 @@ _Outcome_: A decision on merging data with normalized ratings and an understandi
 
 **TASK 3: The Awards Begin - Identifying Annual and Continental Favorites**
 
-_Approach_: Aggregate and rank beers by year, continent, and globally based on user ratings.
+_Approach_: Aggregate and rank beers by year, continent, and globally based on user ratings. Also merge ratings information with user and beer information, so as to analyze the demographic impact on the beer rating made by each user.
 
 > US-specific Analysis: Separate analysis for the United States by state to explore intra-country variation (We are making this choice because the data from the US represents a clear majority. Our goal is to understand whether this majority is homogeneous or if there are further differences within it.).
 
 _Subtasks_:
-* Individual analysis on beers, breweries, users and ratings. On beers:
+* Individual analysis on beers, breweries, users and ratings, taking into account parameters as location, time, and beer style, accordingly for each specific variable under analysis.
 
-* Comparing result from the two datasets for deeper analysis
+* Study on a merged dataframe, with information from beers, users, breweries and ratings. Analysis on location of beers, breweries and users. Time evolution of beer preferences from user and ratings information.
+
+* Comparing result from the two datasets for deeper analysis.
 
 _Outcome_: A structured dataset of top-rated beers annually and by continent.
 
@@ -79,7 +81,7 @@ _Prediction evaluation_: It will also be valuable to assess whether the extracte
 
 _Outcome_: A database of characteristic descriptors for the preferred beer, grouped by year and region, with sentiment context.
 
-**Task 4: Make it visible!**
+**TASK 5: Make it visible!**
 
 _Visualization Tools_: Consider tools like Tableau, Plotly, or D3.js for rich, interactive visualizations. Geographic visualizations can depict beer preferences by region and allow users to interact with data by year or flavor profile.
 
@@ -89,30 +91,22 @@ _Outcome_: Engaging, accessible visualizations that display the evolution of bee
 
 ## **Proposed timeline**
 
-- **15.11.2024** – Homework 2 and Task 1
-- **22.11.2024** – Task 2
-- **29.11.2024** – Task 3
-- **15.12.2024** – Task 4
+- **15.11.2024** – Task 1, Task 2 and starting Task 3
+- **22.11.2024** – Task 3
+- **29.11.2024** – Task 4 
+- **15.12.2024** – Task 5
 
 <<<<<<< HEAD
 ## **Organization within the team**
-=======
-- **15.11.2024** – Homework 2
-- **22.11.2024** – Task 3
-- **29.11.2024** – Task 4
-- **06.12.2024** – Task 4
-- **13.12.2024** – Task 5
-
-## Organization within the team
 >>>>>>> 948b5ee79298f170598fa29f7b67e5253c754f7d
 
 We strongly believe in teamwork and feel that ten eyes are always better than two. Although there were specific divisions of tasks (outlined below), we want to emphasize that we all contributed to every part of the project, advising and correcting each other along the way.
 
-* **Chiara** - ReadMe and Task 3
-* **Vittoria** – Task 1 and Task 3
-* **Jofre** – Task 1 and Task 4
+* **Chiara** - ReadMe, Task 2 and Task 3
+* **Vittoria** – Task 2 and Task 3
+* **Jofre** – Task 3, Task 4 and Task 5
 * **Jon** – Task 1 and Task 2
-* **Ari** – Task 1 and Task 3
+* **Ari** – Task 1, Task 2 and Task 3
 
 ## **Repository structure**
 
@@ -123,12 +117,16 @@ The **current** directory structure of new project looks like this:
 │
 ├── src                         <- Source code
 │   ├── data                            <- Data directory: processings notebooks
+│        ├── pre_processing.ipynb             <- Data pre-processing 
+│        └── merging_analysis.ipynb           <- Database merging analysis
 │
 ├── results.ipynb               <- initial analysis and results obtained
 │
+├── utils.py                    <- List of functions used in the project
 ├── .gitignore                  <- List of files ignored by git
 ├── pip_requirements.txt        <- File for installing python dependencies
 └── README.md
+
 ```
 
 <<<<<<< HEAD
