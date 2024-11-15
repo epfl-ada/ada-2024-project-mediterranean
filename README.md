@@ -40,7 +40,7 @@ _Statistical Approach_: Perform several test to compare distribution shapes and 
 
 _Outcome_: A decision on merging data with normalized ratings and an understanding of dataset compatibility.
 
->If the K-S test and visual inspection reveal comparable distributions, we can confidently merge the datasets with normalized scores. If differences are notable, we could choose to keep the datasets separate and conduct analyses within each before combining higher-level results. 
+>If the tests and visual inspections reveal comparable distributions, we can confidently merge the datasets with normalized scores. If differences are notable, we could choose to keep the datasets separate and conduct analyses within each before combining higher-level results. 
 
 **TASK 2: Bias Identification and Preprocessing**
 
