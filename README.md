@@ -10,7 +10,7 @@ By analyzing emerging trends, we seek to forecast which aromas and styles will d
 
 ## Research questions
 
-* **How are users and breweries distributed in the datasets we are analyzing?** It's important to consider this distribution when weighing and interpreting the results of the analysis.
+* **How are users and breweries distributed in the datasets we are analyzing?** It's important to consider this distribution when weigthing and interpreting the results of the analysis.
 
 * **What is the top-rated beer each year for each continent, and which beer ranks as the global favorite?**
 
