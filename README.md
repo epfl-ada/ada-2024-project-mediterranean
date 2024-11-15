@@ -24,7 +24,7 @@ By analyzing emerging trends, we seek to forecast which aromas and styles will d
 
 ## Additional datasets
 
-We don't need any additional datasets; rather, it may be necessary to look into the production location of the beer to answer the last research question.
+We don't need any additional datasets.
 
 ## Methods
 
