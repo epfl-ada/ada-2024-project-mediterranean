@@ -44,6 +44,7 @@ _Outcome_: Clean, balanced datasets ready for temporal and demographic analysis.
 **TASK 2: Datasets distribution analysis**
 
 <<<<<<< HEAD
+
 Data from RateBeer and BeerAdvocate need to be processed to ensure correctness and organized flow of work. All work saved in `src/data`.
 =======
 _Statistical Approach_: Perform several test to compare distribution shapes and validate if the datasets can be merged.
