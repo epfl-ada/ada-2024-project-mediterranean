@@ -301,7 +301,7 @@ def plot_world_map_data_by_year(dataset):
 
     # Display the figure
     fig.show()
-    fig.write_html("world_beer_map_by_year.html")
+    #fig.write_html("world_beer_map_by_year.html")
 
 
 def plot_US_map_data_by_year_user(dataset):
@@ -430,7 +430,7 @@ def plot_world_map_data_by_weighted_avg_rating(dataset):
 
     # Show the figure
     fig.show()
-    fig.write_html("world_weighted_avg_rating_map_by_year.html")
+    #fig.write_html("world_weighted_avg_rating_map_by_year.html")
     
 def plot_US_weighted_avg_map_by_year(dataset):
     """Creates an interactive map of the United States with the weighted average rating by state over time (year)."""
