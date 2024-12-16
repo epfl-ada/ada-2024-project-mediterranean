@@ -433,7 +433,7 @@ def plot_world_map_data_by_weighted_avg_rating(dataset, filename):
     fig.show()
     fig.write_html("test/" + filename)
     
-def plot_US_weighted_avg_map_by_year(dataset):
+def plot_US_weighted_avg_map_by_year(dataset, filename):
     """Creates an interactive map of the United States with the weighted average rating by state over time (year)."""
     
     # Map full state names to abbreviations
@@ -494,7 +494,264 @@ def plot_US_weighted_avg_map_by_year(dataset):
     # Show the map
     fig.show()
     # Optionally save the map as an HTML file
-    # fig.write_html("us_weighted_avg_beer_map_by_year.html")
+    fig.write_html('test/' + filename)
+
+
+def plot_world_map_data_by_weighted_avg_rating_fl(dataset, filename):
+    import plotly.express as px
+    from iso3166 import countries_by_name
+
+    # Add the column for the logarithm
+    dataset['log_weighted_avg_rating'] = np.log1p(dataset['weighted_avg_rating'])
+
+    # Mapping of country names to ISO Alpha-3 codes
+    country_to_iso3 = {name.upper(): country.alpha3 for name, country in countries_by_name.items()}
+
+    # Manual mappings for countries with non-matching names
+    manual_country_mapping = {
+        'United States': 'USA',
+        'Russia': 'RUS',
+        'United Kingdom': 'GBR',
+        'South Korea': 'KOR',
+        'Iran': 'IRN',
+        'Czech Republic': 'CZE',
+        'Georgia': 'GEO',
+        # Add further mappings if necessary
+    }
+
+    # Mapping country names and adding ISO codes
+    dataset['iso_alpha3'] = dataset['location_user'].map(manual_country_mapping).fillna(
+        dataset['location_user'].str.upper().map(country_to_iso3)
+    )
+
+    # Remove rows with missing ISO codes
+    dataset = dataset.dropna(subset=['iso_alpha3'])
+
+    # Create the interactive map with Plotly
+    fig = px.choropleth(
+        dataset,
+        locations="iso_alpha3",
+        locationmode="ISO-3",
+        color="weighted_avg_rating",
+        hover_name="location_user",
+        hover_data={
+            "weighted_avg_rating": True,
+            "style": True,  # Add the beer name to the hover information
+            "weighted_avg_rating": False
+        },
+        animation_frame="year",
+        title="Progression of  Best Style Ratings by Country"
+    )
+
+    # Update the map layout
+    fig.update_geos(
+        showcoastlines=True,
+        coastlinecolor="Gray"
+    )
+    fig.update_layout(
+        margin={"r": 0, "t": 50, "l": 0, "b": 0},
+        coloraxis_colorbar={
+            'title': "Average Rating (Log Scale)",
+            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000, 10000, 100000]],
+            'ticktext': ['1', '10', '100', '1k', '10k', '100k']
+        }
+    )
+
+    # Show the figure
+    fig.show()
+    fig.write_html('test/' + filename)
+
+
+def plot_US_weighted_avg_map_by_year_fl(dataset, filename):
+    """Creates an interactive map of the United States with the weighted average rating by state over time (year)."""
+    
+    # Map full state names to abbreviations
+    us_state_abbrev = {
+        'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+        'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+        'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA', 'Kansas': 'KS',
+        'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD', 'Massachusetts': 'MA',
+        'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO', 'Montana': 'MT',
+        'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ', 'New Mexico': 'NM',
+        'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH', 'Oklahoma': 'OK',
+        'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC', 'South Dakota': 'SD',
+        'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT', 'Virginia': 'VA', 'Washington': 'WA',
+        'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
+    }
+    
+    # Map the state abbreviations
+    dataset['location_region_user'] = dataset['location_region_user'].str.strip()
+    dataset['state'] = dataset['location_region_user'].map(us_state_abbrev)
+    
+    # Remove unmapped states
+    dataset = dataset.dropna(subset=['state'])
+    
+    # Calculate the logarithmic scale for ratings
+    dataset['log_weighted_avg_rating'] = np.log1p(dataset['weighted_avg_rating'])
+    
+    # Create the interactive map with Plotly
+    fig = px.choropleth(
+        dataset,
+        locations="state",
+        locationmode="USA-states",
+        color="log_weighted_avg_rating",  # Use the logarithmic rating for color
+        hover_name="location_region_user",  # Full state name
+        hover_data={
+            "style": True,  # Show the beer name
+            "weighted_avg_rating": True,  # Show the weighted average rating
+            "log_weighted_avg_rating": False  # Hide the logarithmic value
+        },
+        animation_frame="year",  # Animate the map by year
+        title="Best Style by State in the United States (Weighted Score) Over Time"
+    )
+    
+    # Update layout to focus on the United States
+    fig.update_geos(
+        scope="usa",
+        showcoastlines=True,
+        coastlinecolor="Gray"
+    )
+    fig.update_layout(
+        margin={"r": 0, "t": 50, "l": 0, "b": 0},
+        coloraxis_colorbar={
+            'title': "Weighted Average Rating (Log Scale)",
+            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000]],
+            'ticktext': ['1', '10', '100', '1k']
+        }
+    )
+    
+    # Show the map
+    fig.show()
+    fig.write_html('test/' + filename)
+
+
+def plot_world_map_data_by_weighted_avg_rating_br(dataset, filename):
+    import plotly.express as px
+    from iso3166 import countries_by_name
+
+    # Add the column for the logarithm
+    dataset['log_weighted_avg_rating'] = np.log1p(dataset['weighted_avg_rating'])
+
+    # Mapping of country names to ISO Alpha-3 codes
+    country_to_iso3 = {name.upper(): country.alpha3 for name, country in countries_by_name.items()}
+
+    # Manual mappings for countries with non-matching names
+    manual_country_mapping = {
+        'United States': 'USA',
+        'Russia': 'RUS',
+        'United Kingdom': 'GBR',
+        'South Korea': 'KOR',
+        'Iran': 'IRN',
+        'Czech Republic': 'CZE',
+        'Georgia': 'GEO',
+        # Add further mappings if necessary
+    }
+
+    # Mapping country names and adding ISO codes
+    dataset['iso_alpha3'] = dataset['location_user'].map(manual_country_mapping).fillna(
+        dataset['location_user'].str.upper().map(country_to_iso3)
+    )
+
+    # Remove rows with missing ISO codes
+    dataset = dataset.dropna(subset=['iso_alpha3'])
+
+    # Create the interactive map with Plotly
+    fig = px.choropleth(
+        dataset,
+        locations="iso_alpha3",
+        locationmode="ISO-3",
+        color="weighted_avg_rating",
+        hover_name="location_user",
+        hover_data={
+            "weighted_avg_rating": True,
+            "brewery_name": True,  # Add the beer name to the hover information
+            "weighted_avg_rating": False
+        },
+        animation_frame="year",
+        title=" Best Style Brewery by Country across Time"
+    )
+
+    # Update the map layout
+    fig.update_geos(
+        showcoastlines=True,
+        coastlinecolor="Gray"
+    )
+    fig.update_layout(
+        margin={"r": 0, "t": 50, "l": 0, "b": 0},
+        coloraxis_colorbar={
+            'title': "Average Rating (Log Scale)",
+            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000, 10000, 100000]],
+            'ticktext': ['1', '10', '100', '1k', '10k', '100k']
+        }
+    )
+
+    # Show the figure
+    fig.show()
+    fig.write_html("test/" + filename)
+
+
+def plot_US_weighted_avg_map_by_year_br(dataset, filename):
+    """Creates an interactive map of the United States with the weighted average rating by state over time (year)."""
+    
+    # Map full state names to abbreviations
+    us_state_abbrev = {
+        'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+        'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+        'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA', 'Kansas': 'KS',
+        'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD', 'Massachusetts': 'MA',
+        'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO', 'Montana': 'MT',
+        'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ', 'New Mexico': 'NM',
+        'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH', 'Oklahoma': 'OK',
+        'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC', 'South Dakota': 'SD',
+        'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT', 'Virginia': 'VA', 'Washington': 'WA',
+        'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
+    }
+    
+    # Map the state abbreviations
+    dataset['location_region_user'] = dataset['location_region_user'].str.strip()
+    dataset['state'] = dataset['location_region_user'].map(us_state_abbrev)
+    
+    # Remove unmapped states
+    dataset = dataset.dropna(subset=['state'])
+    
+    # Calculate the logarithmic scale for ratings
+    dataset['log_weighted_avg_rating'] = np.log1p(dataset['weighted_avg_rating'])
+    
+    # Create the interactive map with Plotly
+    fig = px.choropleth(
+        dataset,
+        locations="state",
+        locationmode="USA-states",
+        color="log_weighted_avg_rating",  # Use the logarithmic rating for color
+        hover_name="location_region_user",  # Full state name
+        hover_data={
+            "brewery_name": True,  # Show the beer name
+            "weighted_avg_rating": True,  # Show the weighted average rating
+            "log_weighted_avg_rating": False  # Hide the logarithmic value
+        },
+        animation_frame="year",  # Animate the map by year
+        title="Best Breweries by State in the United States (Weighted Score) Over Time"
+    )
+    
+    # Update layout to focus on the United States
+    fig.update_geos(
+        scope="usa",
+        showcoastlines=True,
+        coastlinecolor="Gray"
+    )
+    fig.update_layout(
+        margin={"r": 0, "t": 50, "l": 0, "b": 0},
+        coloraxis_colorbar={
+            'title': "Weighted Average Rating (Log Scale)",
+            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000]],
+            'ticktext': ['1', '10', '100', '1k']
+        }
+    )
+    
+    # Show the map
+    fig.show()
+    # Optionally save the map as an HTML file
+    fig.write_html('test/' + filename)
 
 
 ################################
@@ -512,32 +769,32 @@ def extract_top_beer_per_state(dataset):
     filtered_reviews = reviews_with_counts[reviews_with_counts['review_count'] >= 5]
 
     weighted_avg_ratings = (
-        filtered_reviews.groupby(['beer_id', 'beer_name', 'year', 'review_count', 'location_user_region'], as_index=False)
+        filtered_reviews.groupby(['beer_id', 'beer_name', 'year', 'review_count', 'location_region_user'], as_index=False)
         .agg(weighted_avg_rating=('rating', 'mean'))
     )
 
     weighted_avg_ratings['rank'] = (
         weighted_avg_ratings
-        .sort_values(['year', 'location_user_region', 'weighted_avg_rating', 'review_count'], ascending=[True, True, False, False])
-        .groupby(['year', 'location_user'])
+        .sort_values(['year', 'location_region_user', 'weighted_avg_rating', 'review_count'], ascending=[True, True, False, False])
+        .groupby(['year', 'location_region_user'])
         .cumcount() + 1
     )
 
     top_ranked_beers = weighted_avg_ratings[weighted_avg_ratings['rank'] == 1]
     best_beers = (
         top_ranked_beers.loc[
-            top_ranked_beers.groupby(['year', 'location_user_region'])['weighted_avg_rating'].idxmax()
+            top_ranked_beers.groupby(['year', 'location_region_user'])['weighted_avg_rating'].idxmax()
         ]
     )
     pivot_data = best_beers.pivot(
-        index='year', columns='location_user_region', values='weighted_avg_rating'
+        index='year', columns='location_region_user', values='weighted_avg_rating'
     ).reset_index()
     pivot_long = pivot_data.melt(
-        id_vars='year', var_name='location_user_region', value_name='weighted_avg_rating'
+        id_vars='year', var_name='location_region_user', value_name='weighted_avg_rating'
     )
     pivot_long = pivot_long.merge(
-        best_beers[['beer_id', 'beer_name', 'year', 'location_user_region']],
-        on=['year', 'location_user_region'],
+        best_beers[['beer_id', 'beer_name', 'year', 'location_region_user']],
+        on=['year', 'location_region_user'],
         how='left'
     )
     pivot_long = pivot_long.dropna(subset=['weighted_avg_rating'])
@@ -587,3 +844,194 @@ def extract_top_beer_per_country(dataset):
     pivot_long = pivot_long.sort_values(by='year', ascending=True).reset_index(drop=True)
 
     return pivot_long
+
+
+
+def extract_top_flavor(dataset):
+    review_counts_fl_ba = dataset.groupby(['beer_id']).size().reset_index(name='review_count')
+    reviews_with_counts_fl_ba = pd.merge(dataset, review_counts_fl_ba, on=['beer_id'])
+    filtered_reviews_fl_ba= reviews_with_counts_fl_ba[reviews_with_counts_fl_ba['review_count'] >= 5]
+
+    weighted_avg_ratings_fl_ba= filtered_reviews_fl_ba.groupby(['style', 'year','review_count', 'location_user']).apply(
+        lambda x: (x['rating'] * x['review_count']).sum() / x['review_count'].sum()
+    ).reset_index(name='weighted_avg_rating')
+    weighted_avg_ratings_fl_ba['rank'] = (
+        weighted_avg_ratings_fl_ba.sort_values(['year', 'location_user', 'weighted_avg_rating', 'review_count'], 
+                                            ascending=[True, True, False, False])
+        .groupby(['year', 'location_user'])
+        .cumcount() + 1
+    )
+
+    top_ranked_beers_fl_ba = weighted_avg_ratings_fl_ba[weighted_avg_ratings_fl_ba['rank'] == 1]
+
+    best_fl_BA = top_ranked_beers_fl_ba.loc[
+    top_ranked_beers_fl_ba.groupby(['year', 'location_user'])['weighted_avg_rating'].idxmax()
+    ]
+
+    # Create pivot table
+    pivot_data_BA_fl = best_fl_BA.pivot_table(
+        values='weighted_avg_rating', 
+        index='year',
+        columns='location_user',
+        aggfunc='first'
+    )
+
+    #  Reshape to long format
+    pivot_long_BA_fl = pivot_data_BA_fl.reset_index().melt(
+        id_vars='year', 
+        var_name='location_user', 
+        value_name='weighted_avg_rating'
+    )
+
+
+    pivot_long_BA_fl = pivot_long_BA_fl.merge(
+        best_fl_BA[['style', 'year', 'location_user']],
+        on=['year', 'location_user'],
+        how='left'
+    )
+
+    pivot_long_BA_fl = pivot_long_BA_fl.dropna(subset=['weighted_avg_rating'])
+    pivot_long_BA_fl = pivot_long_BA_fl.sort_values(by='year', ascending=True).reset_index(drop=True)
+
+    return pivot_long_BA_fl
+
+
+def extract_top_flavor_US(dataset):
+    review_counts_fl_ba = dataset.groupby(['beer_id']).size().reset_index(name='review_count')
+    reviews_with_counts_fl_ba = pd.merge(dataset, review_counts_fl_ba, on=['beer_id'])
+    filtered_reviews_fl_ba= reviews_with_counts_fl_ba[reviews_with_counts_fl_ba['review_count'] >= 5]
+
+    weighted_avg_ratings_fl_ba= filtered_reviews_fl_ba.groupby(['style', 'year','review_count', 'location_region_user']).apply(
+        lambda x: (x['rating'] * x['review_count']).sum() / x['review_count'].sum()
+    ).reset_index(name='weighted_avg_rating')
+    weighted_avg_ratings_fl_ba['rank'] = (
+        weighted_avg_ratings_fl_ba.sort_values(['year', 'location_region_user', 'weighted_avg_rating', 'review_count'], 
+                                            ascending=[True, True, False, False])
+        .groupby(['year', 'location_region_user'])
+        .cumcount() + 1
+    )
+
+    top_ranked_beers_fl_ba = weighted_avg_ratings_fl_ba[weighted_avg_ratings_fl_ba['rank'] == 1]
+
+    best_fl_BA = top_ranked_beers_fl_ba.loc[
+    top_ranked_beers_fl_ba.groupby(['year', 'location_region_user'])['weighted_avg_rating'].idxmax()
+    ]
+
+    # Create pivot table
+    pivot_data_BA_fl = best_fl_BA.pivot_table(
+        values='weighted_avg_rating', 
+        index='year',
+        columns='location_region_user',
+        aggfunc='first'
+    )
+
+    #  Reshape to long format
+    pivot_long_BA_fl = pivot_data_BA_fl.reset_index().melt(
+        id_vars='year', 
+        var_name='location_region_user', 
+        value_name='weighted_avg_rating'
+    )
+
+
+    pivot_long_BA_fl = pivot_long_BA_fl.merge(
+        best_fl_BA[['style', 'year', 'location_region_user']],
+        on=['year', 'location_region_user'],
+        how='left'
+    )
+
+    pivot_long_BA_fl = pivot_long_BA_fl.dropna(subset=['weighted_avg_rating'])
+    pivot_long_BA_fl = pivot_long_BA_fl.sort_values(by='year', ascending=True).reset_index(drop=True)
+
+    return pivot_long_BA_fl
+
+
+def extract_brewery(dataset):
+    review_counts_br_ba = dataset.groupby(['beer_id']).size().reset_index(name='review_count')
+    reviews_with_counts_br_ba = pd.merge(dataset, review_counts_br_ba, on=['beer_id'])
+    filtered_reviews_br_ba= reviews_with_counts_br_ba[reviews_with_counts_br_ba['review_count'] >= 5]
+
+    weighted_avg_ratings_br_ba= filtered_reviews_br_ba.groupby(['brewery_name', 'year','review_count', 'location_user']).apply(
+        lambda x: (x['rating'] * x['review_count']).sum() / x['review_count'].sum()
+    ).reset_index(name='weighted_avg_rating')
+    weighted_avg_ratings_br_ba['rank'] = (
+        weighted_avg_ratings_br_ba.sort_values(['year', 'location_user', 'weighted_avg_rating', 'review_count'], 
+                                            ascending=[True, True, False, False])
+        .groupby(['year', 'location_user'])
+        .cumcount() + 1
+    )
+
+    top_ranked_beers_br_ba = weighted_avg_ratings_br_ba[weighted_avg_ratings_br_ba['rank'] == 1]
+
+    best_br_BA = top_ranked_beers_br_ba.loc[
+    top_ranked_beers_br_ba.groupby(['year', 'location_user'])['weighted_avg_rating'].idxmax()
+    ]
+
+    # Create pivot table
+    pivot_data_BA_br = best_br_BA.pivot_table(
+        values='weighted_avg_rating', 
+        index='year',
+        columns='location_user',
+        aggfunc='first'
+    )
+
+    #  Reshape to long format
+    pivot_long_BA_br = pivot_data_BA_br.reset_index().melt(
+        id_vars='year', 
+        var_name='location_user', 
+        value_name='weighted_avg_rating'
+    )
+
+
+    pivot_long_BA_br = pivot_long_BA_br.merge(
+        best_br_BA[['brewery_name', 'year', 'location_user']],
+        on=['year', 'location_user'],
+        how='left'
+    )
+
+    return pivot_long_BA_br
+
+
+def extract_brewery_US(dataset):
+    review_counts_br_ba = dataset.groupby(['beer_id']).size().reset_index(name='review_count')
+    reviews_with_counts_br_ba = pd.merge(dataset, review_counts_br_ba, on=['beer_id'])
+    filtered_reviews_br_ba= reviews_with_counts_br_ba[reviews_with_counts_br_ba['review_count'] >= 5]
+
+    weighted_avg_ratings_br_ba= filtered_reviews_br_ba.groupby(['brewery_name', 'year','review_count', 'location_region_user']).apply(
+        lambda x: (x['rating'] * x['review_count']).sum() / x['review_count'].sum()
+    ).reset_index(name='weighted_avg_rating')
+    weighted_avg_ratings_br_ba['rank'] = (
+        weighted_avg_ratings_br_ba.sort_values(['year', 'location_region_user', 'weighted_avg_rating', 'review_count'], 
+                                            ascending=[True, True, False, False])
+        .groupby(['year', 'location_region_user'])
+        .cumcount() + 1
+    )
+
+    top_ranked_beers_br_ba = weighted_avg_ratings_br_ba[weighted_avg_ratings_br_ba['rank'] == 1]
+
+    best_br_BA = top_ranked_beers_br_ba.loc[
+    top_ranked_beers_br_ba.groupby(['year', 'location_region_user'])['weighted_avg_rating'].idxmax()
+    ]
+
+    # Create pivot table
+    pivot_data_BA_br = best_br_BA.pivot_table(
+        values='weighted_avg_rating', 
+        index='year',
+        columns='location_region_user',
+        aggfunc='first'
+    )
+
+    #  Reshape to long format
+    pivot_long_BA_br = pivot_data_BA_br.reset_index().melt(
+        id_vars='year', 
+        var_name='location_region_user', 
+        value_name='weighted_avg_rating'
+    )
+
+
+    pivot_long_BA_br = pivot_long_BA_br.merge(
+        best_br_BA[['brewery_name', 'year', 'location_region_user']],
+        on=['year', 'location_region_user'],
+        how='left'
+    )
+
+    return pivot_long_BA_br
