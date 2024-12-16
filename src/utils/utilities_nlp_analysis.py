@@ -124,6 +124,28 @@ def generate_wordclouds(reviews_df, group_by='cluster'):
         plt.title(f"Word Cloud for {group_by.capitalize()}: {group}")
         plt.show()
 
+def generate_wordclouds_save(reviews_df, group_by='cluster'):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.join('test', 'Sentiment', 'Worldclouds')
+    os.makedirs(output_dir, exist_ok=True)
+
+    grouped_data = reviews_df.groupby(group_by)
+    for group, group_df in grouped_data:
+        # Generate the word cloud text
+        text = ' '.join(group_df['cleaned_text'])
+        wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+
+        # Save the word cloud to the output directory
+        file_path = os.path.join(output_dir, f'wordcloud_{group}.png')
+        wordcloud.to_file(file_path)
+
+        # Optionally, plot the word cloud for visual inspection
+        plt.figure(figsize=(10, 5))
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis('off')
+        plt.title(f"Word Cloud for {group_by.capitalize()}: {group}")
+        plt.show()
+
 # Function to compute word frequencies by year
 def compute_word_frequencies(reviews_df, year_column='year_x'):
     word_freq_by_year = {}
@@ -136,6 +158,7 @@ def compute_word_frequencies(reviews_df, year_column='year_x'):
 # Improved Function to Plot Word Frequency Trends
 def plot_word_frequency_trends(word_freq_by_year, words):
     # Prepare word trends
+    
     word_trends = {word: [] for word in words}
     years = sorted(word_freq_by_year.keys())
     
@@ -182,7 +205,7 @@ def plot_word_frequency_trends(word_freq_by_year, words):
     plt.tight_layout()
     
     # Optionally, save the plot for web use
-    plt.savefig("word_frequency_trends_website.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.savefig("test/Sentiment/word_frequency_trends_website.png", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
 
 
@@ -202,6 +225,7 @@ def plot_sentiment_trends(sentiment_by_year):
     plt.ylabel('Average Sentiment')
     plt.title('Sentiment Trends Over Years')
     plt.legend()
+    plt.savefig("test/Sentiment/sentiment_trends.png", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
 
 # Function to extract cluster-specific keywords
@@ -222,6 +246,27 @@ def plot_cluster_profiles(cluster_keywords):
         plt.title(f'Cluster {cluster} Profile')
         plt.xlabel('Frequency')
         plt.ylabel('Words')
+        plt.savefig(f"test/Sentiment/ClusterProfiles/clusterprofile_{cluster}.png", dpi=300, bbox_inches='tight', transparent=True)
+        plt.show()
+
+def plot_cluster_profiles_save(cluster_keywords):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.join('test', 'Sentiment', 'ClusterProfiles')
+    os.makedirs(output_dir, exist_ok=True)
+
+    for cluster, keywords in cluster_keywords.items():
+        words, counts = zip(*keywords)
+        plt.figure(figsize=(8, 4))
+        sns.barplot(x=counts, y=words)
+        plt.title(f'Cluster {cluster} Profile')
+        plt.xlabel('Frequency')
+        plt.ylabel('Words')
+        
+        # Save the plot to the output directory
+        file_path = os.path.join(output_dir, f'cluster_profile_{cluster}.png')
+        plt.savefig(file_path, bbox_inches='tight')
+        
+        # Optionally, display the plot
         plt.show()
 
 # Function to extract n-grams
@@ -242,6 +287,7 @@ def plot_top_ngrams(ngram_freq, top_n=20):
     plt.title(f'Top {top_n} N-Grams')
     plt.xlabel('Frequency')
     plt.ylabel('N-Grams')
+    plt.savefig("test/Sentiment/top_ngrams.png", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
 
 # Function to plot cluster distribution over years
@@ -253,6 +299,7 @@ def plot_cluster_distribution(reviews_df, year_column='year_x', cluster_column='
     plt.xlabel('Year')
     plt.ylabel('Review Count')
     plt.legend(title='Cluster')
+    plt.savefig("test/Sentiment/cluster_distribution.png", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
 
 

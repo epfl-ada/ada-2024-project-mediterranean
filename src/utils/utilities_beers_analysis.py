@@ -24,7 +24,7 @@ from iso3166 import countries_by_name
 ################################
 #%%
 
-def plot_US_map_data(dataset):
+def plot_US_map_data(dataset, filename):
     """_summary_
 
     Args:
@@ -87,10 +87,10 @@ def plot_US_map_data(dataset):
 
     # Display the figure
     fig.show()
-    #fig.write_html("us_beer_map.html")
+    fig.write_html("test/" + filename)
 
 
-def plot_world_map_data(dataset):
+def plot_world_map_data(dataset, filename):
     """Creates a choropleth map for the whole world based on the dataset.
 
     Args:
@@ -154,10 +154,10 @@ def plot_world_map_data(dataset):
 
     # Display the figure
     fig.show()
-    #fig.write_html("world_beer_map.html")
+    fig.write_html("test/" + filename)
 
 
-def plot_US_map_data_by_year(dataset):
+def plot_US_map_data_by_year(dataset, filename):
     """Creates an interactive choropleth map for US states by year based on beer ratings.
 
     Args:
@@ -225,9 +225,10 @@ def plot_US_map_data_by_year(dataset):
 
     # Display the figure
     fig.show()
+    fig.write_html("test/" + filename)
 
 
-def plot_world_map_data_by_year(dataset):
+def plot_world_map_data_by_year(dataset, filename):
     """Creates a choropleth map for the whole world based on the dataset with year-wise animation.
 
     Args:
@@ -301,7 +302,7 @@ def plot_world_map_data_by_year(dataset):
 
     # Display the figure
     fig.show()
-    #fig.write_html("world_beer_map_by_year.html")
+    fig.write_html("test/" + filename)
 
 
 def plot_US_map_data_by_year_user(dataset):
@@ -369,7 +370,7 @@ def plot_US_map_data_by_year_user(dataset):
     )
     fig.show()
 
-def plot_world_map_data_by_weighted_avg_rating(dataset):
+def plot_world_map_data_by_weighted_avg_rating(dataset, filename):
   
 
     # Add the column for the logarithm
@@ -430,7 +431,7 @@ def plot_world_map_data_by_weighted_avg_rating(dataset):
 
     # Show the figure
     fig.show()
-    #fig.write_html("world_weighted_avg_rating_map_by_year.html")
+    fig.write_html("test/" + filename)
     
 def plot_US_weighted_avg_map_by_year(dataset):
     """Creates an interactive map of the United States with the weighted average rating by state over time (year)."""
@@ -499,6 +500,50 @@ def plot_US_weighted_avg_map_by_year(dataset):
 ################################
 ######## DATA HANDLING #########
 ################################
+
+
+def extract_top_beer_per_state(dataset):
+    review_counts = dataset['beer_id'].value_counts().reset_index()
+    review_counts.columns = ['beer_id', 'review_count']
+
+    reviews_with_counts = dataset.merge(review_counts, on='beer_id')
+
+
+    filtered_reviews = reviews_with_counts[reviews_with_counts['review_count'] >= 5]
+
+    weighted_avg_ratings = (
+        filtered_reviews.groupby(['beer_id', 'beer_name', 'year', 'review_count', 'location_user_region'], as_index=False)
+        .agg(weighted_avg_rating=('rating', 'mean'))
+    )
+
+    weighted_avg_ratings['rank'] = (
+        weighted_avg_ratings
+        .sort_values(['year', 'location_user_region', 'weighted_avg_rating', 'review_count'], ascending=[True, True, False, False])
+        .groupby(['year', 'location_user'])
+        .cumcount() + 1
+    )
+
+    top_ranked_beers = weighted_avg_ratings[weighted_avg_ratings['rank'] == 1]
+    best_beers = (
+        top_ranked_beers.loc[
+            top_ranked_beers.groupby(['year', 'location_user_region'])['weighted_avg_rating'].idxmax()
+        ]
+    )
+    pivot_data = best_beers.pivot(
+        index='year', columns='location_user_region', values='weighted_avg_rating'
+    ).reset_index()
+    pivot_long = pivot_data.melt(
+        id_vars='year', var_name='location_user_region', value_name='weighted_avg_rating'
+    )
+    pivot_long = pivot_long.merge(
+        best_beers[['beer_id', 'beer_name', 'year', 'location_user_region']],
+        on=['year', 'location_user_region'],
+        how='left'
+    )
+    pivot_long = pivot_long.dropna(subset=['weighted_avg_rating'])
+    pivot_long = pivot_long.sort_values(by='year', ascending=True).reset_index(drop=True)
+
+    return pivot_long
 
 def extract_top_beer_per_country(dataset):
     review_counts = dataset['beer_id'].value_counts().reset_index()
