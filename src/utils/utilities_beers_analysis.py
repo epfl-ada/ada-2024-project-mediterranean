@@ -408,8 +408,7 @@ def plot_world_map_data_by_weighted_avg_rating(dataset, filename):
         hover_name="location_user",
         hover_data={
             "weighted_avg_rating": True,
-            "beer_name": True,  # Add the beer name to the hover information
-            "weighted_avg_rating": False
+            "beer_name": True  # Add the beer name to the hover information
         },
         animation_frame="year",
         title="Progression of Beer Ratings of the Best Beer by Country"
@@ -421,13 +420,14 @@ def plot_world_map_data_by_weighted_avg_rating(dataset, filename):
         coastlinecolor="Gray"
     )
     fig.update_layout(
-        margin={"r": 0, "t": 50, "l": 0, "b": 0},
-        coloraxis_colorbar={
-            'title': "Average Rating (Log Scale)",
-            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000, 10000, 100000]],
-            'ticktext': ['1', '10', '100', '1k', '10k', '100k']
+    margin={"r": 0, "t": 50, "l": 0, "b": 0},
+    coloraxis_colorbar={
+        'title': "Average Rating",
+        'tickvals': [0, 1, 2, 3, 4, 5],  # Explicit range ticks
+        'ticktext': ['0', '1', '2', '3', '4', '5']
         }
     )
+
 
     # Show the figure
     fig.show()
@@ -469,8 +469,7 @@ def plot_US_weighted_avg_map_by_year(dataset, filename):
         hover_name="location_region_user",  # Full state name
         hover_data={
             "beer_name": True,  # Show the beer name
-            "weighted_avg_rating": True,  # Show the weighted average rating
-            "log_weighted_avg_rating": False  # Hide the logarithmic value
+            "weighted_avg_rating": True  # Hide the logarithmic value
         },
         animation_frame="year",  # Animate the map by year
         title="Best Beers by State in the United States (Weighted Score) Over Time"
@@ -483,11 +482,11 @@ def plot_US_weighted_avg_map_by_year(dataset, filename):
         coastlinecolor="Gray"
     )
     fig.update_layout(
-        margin={"r": 0, "t": 50, "l": 0, "b": 0},
-        coloraxis_colorbar={
-            'title': "Weighted Average Rating (Log Scale)",
-            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000]],
-            'ticktext': ['1', '10', '100', '1k']
+    margin={"r": 0, "t": 50, "l": 0, "b": 0},
+    coloraxis_colorbar={
+        'title': "Average Rating",
+        'tickvals': [0, 1, 2, 3, 4, 5],  # Explicit range ticks
+        'ticktext': ['0', '1', '2', '3', '4', '5']
         }
     )
     
@@ -536,8 +535,7 @@ def plot_world_map_data_by_weighted_avg_rating_fl(dataset, filename):
         hover_name="location_user",
         hover_data={
             "weighted_avg_rating": True,
-            "style": True,  # Add the beer name to the hover information
-            "weighted_avg_rating": False
+            "style": True
         },
         animation_frame="year",
         title="Progression of  Best Style Ratings by Country"
@@ -549,11 +547,11 @@ def plot_world_map_data_by_weighted_avg_rating_fl(dataset, filename):
         coastlinecolor="Gray"
     )
     fig.update_layout(
-        margin={"r": 0, "t": 50, "l": 0, "b": 0},
-        coloraxis_colorbar={
-            'title': "Average Rating (Log Scale)",
-            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000, 10000, 100000]],
-            'ticktext': ['1', '10', '100', '1k', '10k', '100k']
+    margin={"r": 0, "t": 50, "l": 0, "b": 0},
+    coloraxis_colorbar={
+        'title': "Average Rating",
+        'tickvals': [0, 1, 2, 3, 4, 5],  # Explicit range ticks
+        'ticktext': ['0', '1', '2', '3', '4', '5']
         }
     )
 
@@ -612,11 +610,11 @@ def plot_US_weighted_avg_map_by_year_fl(dataset, filename):
         coastlinecolor="Gray"
     )
     fig.update_layout(
-        margin={"r": 0, "t": 50, "l": 0, "b": 0},
-        coloraxis_colorbar={
-            'title': "Weighted Average Rating (Log Scale)",
-            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000]],
-            'ticktext': ['1', '10', '100', '1k']
+    margin={"r": 0, "t": 50, "l": 0, "b": 0},
+    coloraxis_colorbar={
+        'title': "Average Rating",
+        'tickvals': [0, 1, 2, 3, 4, 5],  # Explicit range ticks
+        'ticktext': ['0', '1', '2', '3', '4', '5']
         }
     )
     
@@ -677,11 +675,11 @@ def plot_world_map_data_by_weighted_avg_rating_br(dataset, filename):
         coastlinecolor="Gray"
     )
     fig.update_layout(
-        margin={"r": 0, "t": 50, "l": 0, "b": 0},
-        coloraxis_colorbar={
-            'title': "Average Rating (Log Scale)",
-            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000, 10000, 100000]],
-            'ticktext': ['1', '10', '100', '1k', '10k', '100k']
+    margin={"r": 0, "t": 50, "l": 0, "b": 0},
+    coloraxis_colorbar={
+        'title': "Average Rating",
+        'tickvals': [0, 1, 2, 3, 4, 5],  # Explicit range ticks
+        'ticktext': ['0', '1', '2', '3', '4', '5']
         }
     )
 
@@ -740,11 +738,11 @@ def plot_US_weighted_avg_map_by_year_br(dataset, filename):
         coastlinecolor="Gray"
     )
     fig.update_layout(
-        margin={"r": 0, "t": 50, "l": 0, "b": 0},
-        coloraxis_colorbar={
-            'title': "Weighted Average Rating (Log Scale)",
-            'tickvals': [np.log1p(val) for val in [1, 10, 100, 1000]],
-            'ticktext': ['1', '10', '100', '1k']
+    margin={"r": 0, "t": 50, "l": 0, "b": 0},
+    coloraxis_colorbar={
+        'title': "Average Rating",
+        'tickvals': [0, 1, 2, 3, 4, 5],  # Explicit range ticks
+        'ticktext': ['0', '1', '2', '3', '4', '5']
         }
     )
     

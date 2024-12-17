@@ -124,9 +124,9 @@ def generate_wordclouds(reviews_df, group_by='cluster'):
         plt.title(f"Word Cloud for {group_by.capitalize()}: {group}")
         plt.show()
 
-def generate_wordclouds_save(reviews_df, group_by='cluster'):
+def generate_wordclouds_save_ba(reviews_df, group_by='cluster'):
     # Create the output directory if it doesn't exist
-    output_dir = os.path.join('test', 'Sentiment', 'Worldclouds')
+    output_dir = os.path.join('test', 'Sentiment','BeerAdvocate', 'Worldclouds')
     os.makedirs(output_dir, exist_ok=True)
 
     grouped_data = reviews_df.groupby(group_by)
@@ -156,7 +156,7 @@ def compute_word_frequencies(reviews_df, year_column='year_x'):
     return word_freq_by_year
 
 # Improved Function to Plot Word Frequency Trends
-def plot_word_frequency_trends(word_freq_by_year, words):
+def plot_word_frequency_trends_ba(word_freq_by_year, words):
     # Prepare word trends
     
     word_trends = {word: [] for word in words}
@@ -205,7 +205,7 @@ def plot_word_frequency_trends(word_freq_by_year, words):
     plt.tight_layout()
     
     # Optionally, save the plot for web use
-    plt.savefig("test/Sentiment/word_frequency_trends_website.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.savefig("test/Sentiment/BeerAdvocate/word_frequency_trends_website.png", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
 
 
@@ -218,14 +218,14 @@ def compute_sentiment(reviews_df):
     return sentiment_by_year
 
 # Function to plot sentiment trends
-def plot_sentiment_trends(sentiment_by_year):
+def plot_sentiment_trends_ba(sentiment_by_year):
     plt.figure(figsize=(10, 6))
     plt.plot(sentiment_by_year.index, sentiment_by_year.values, marker='o', label='Sentiment')
     plt.xlabel('Year')
     plt.ylabel('Average Sentiment')
     plt.title('Sentiment Trends Over Years')
     plt.legend()
-    plt.savefig("test/Sentiment/sentiment_trends.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.savefig("test/Sentiment/BeerAdvocate/sentiment_trends.png", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
 
 # Function to extract cluster-specific keywords
@@ -238,7 +238,7 @@ def extract_cluster_keywords(reviews_df, cluster_column='cluster', n_top_words=1
     return cluster_keywords
 
 # Function to visualize cluster profiles
-def plot_cluster_profiles(cluster_keywords):
+def plot_cluster_profiles_ba(cluster_keywords):
     for cluster, keywords in cluster_keywords.items():
         words, counts = zip(*keywords)
         plt.figure(figsize=(8, 4))
@@ -246,12 +246,12 @@ def plot_cluster_profiles(cluster_keywords):
         plt.title(f'Cluster {cluster} Profile')
         plt.xlabel('Frequency')
         plt.ylabel('Words')
-        plt.savefig(f"test/Sentiment/ClusterProfiles/clusterprofile_{cluster}.png", dpi=300, bbox_inches='tight', transparent=True)
+        plt.savefig(f"test/Sentiment/BeerAdvocate/ClusterProfiles/clusterprofile_{cluster}.png", dpi=300, bbox_inches='tight', transparent=True)
         plt.show()
 
-def plot_cluster_profiles_save(cluster_keywords):
+def plot_cluster_profiles_save_ba(cluster_keywords):
     # Create the output directory if it doesn't exist
-    output_dir = os.path.join('test', 'Sentiment', 'ClusterProfiles')
+    output_dir = os.path.join('test', 'Sentiment','BeerAdvocate', 'ClusterProfiles')
     os.makedirs(output_dir, exist_ok=True)
 
     for cluster, keywords in cluster_keywords.items():
@@ -280,18 +280,18 @@ def extract_ngrams(reviews_df, n=2):
     return ngram_freq
 
 # Function to plot n-grams
-def plot_top_ngrams(ngram_freq, top_n=20):
+def plot_top_ngrams_ba(ngram_freq, top_n=20):
     top_ngrams = ngram_freq.head(top_n)
     plt.figure(figsize=(10, 6))
     sns.barplot(x='frequency', y='ngram', data=top_ngrams)
     plt.title(f'Top {top_n} N-Grams')
     plt.xlabel('Frequency')
     plt.ylabel('N-Grams')
-    plt.savefig("test/Sentiment/top_ngrams.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.savefig("test/Sentiment/BeerAdvocate/top_ngrams.png", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
 
 # Function to plot cluster distribution over years
-def plot_cluster_distribution(reviews_df, year_column='year_x', cluster_column='cluster'):
+def plot_cluster_distribution_ba(reviews_df, year_column='year_x', cluster_column='cluster'):
     cluster_distribution = reviews_df.groupby([year_column, cluster_column]).size().unstack(fill_value=0)
     
     cluster_distribution.plot(kind='bar', stacked=True, figsize=(12, 6))
@@ -299,7 +299,7 @@ def plot_cluster_distribution(reviews_df, year_column='year_x', cluster_column='
     plt.xlabel('Year')
     plt.ylabel('Review Count')
     plt.legend(title='Cluster')
-    plt.savefig("test/Sentiment/cluster_distribution.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.savefig("test/Sentiment/BeerAdvocate/cluster_distribution.png", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
 
 
@@ -314,3 +314,150 @@ def compute_most_used_words(reviews_df, cluster_col='cluster', text_col='cleaned
         most_common_words = token_counts.most_common(20)
         cluster_word_counts[cluster] = most_common_words
     return cluster_word_counts
+
+
+
+def generate_wordclouds_save_rb(reviews_df, group_by='cluster'):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.join('test', 'Sentiment','RateBeer', 'Worldclouds')
+    os.makedirs(output_dir, exist_ok=True)
+
+    grouped_data = reviews_df.groupby(group_by)
+    for group, group_df in grouped_data:
+        # Generate the word cloud text
+        text = ' '.join(group_df['cleaned_text'])
+        wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+
+        # Save the word cloud to the output directory
+        file_path = os.path.join(output_dir, f'wordcloud_{group}.png')
+        wordcloud.to_file(file_path)
+
+        # Optionally, plot the word cloud for visual inspection
+        plt.figure(figsize=(10, 5))
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis('off')
+        plt.title(f"Word Cloud for {group_by.capitalize()}: {group}")
+        plt.show()
+
+
+# Improved Function to Plot Word Frequency Trends
+def plot_word_frequency_trends_rb(word_freq_by_year, words):
+    # Prepare word trends
+    
+    word_trends = {word: [] for word in words}
+    years = sorted(word_freq_by_year.keys())
+    
+    for year in years:
+        year_counts = word_freq_by_year[year]
+        for word in words:
+            word_trends[word].append(year_counts.get(word, 0))
+    
+    # Create a more visually appealing plot
+    plt.figure(figsize=(12, 8))
+    colors = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1']  # Website-friendly color palette
+    
+    for i, (word, counts) in enumerate(word_trends.items()):
+        plt.plot(
+            years, counts, 
+            label=word.capitalize(), 
+            marker='o', markersize=8, 
+            linewidth=2.5, 
+            color=colors[i % len(colors)]
+        )
+    
+    # Add labels, title, and customize aesthetics
+    plt.xlabel('Year', fontsize=16, weight='bold', color='#333333')
+    plt.ylabel('Frequency', fontsize=16, weight='bold', color='#333333')
+    plt.title('Word Frequency Trends Over Years', fontsize=20, weight='bold', color='#333333')
+    
+    # Customize legend
+    plt.legend(
+        fontsize=12, 
+        title="Words", 
+        title_fontsize=14, 
+        loc='upper left', 
+        frameon=True, 
+        framealpha=0.9, 
+        edgecolor='#CCCCCC'
+    )
+    
+    # Add grid for better readability
+    plt.grid(color='#DDDDDD', linestyle='--', linewidth=0.5)
+    plt.xticks(fontsize=12, weight='bold', color='#555555')
+    plt.yticks(fontsize=12, weight='bold', color='#555555')
+    
+    # Adjust layout for a clean appearance
+    plt.tight_layout()
+    
+    # Optionally, save the plot for web use
+    plt.savefig("test/Sentiment/RateBeer/word_frequency_trends_website.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.show()
+
+
+# Function to plot sentiment trends
+def plot_sentiment_trends_rb(sentiment_by_year):
+    plt.figure(figsize=(10, 6))
+    plt.plot(sentiment_by_year.index, sentiment_by_year.values, marker='o', label='Sentiment')
+    plt.xlabel('Year')
+    plt.ylabel('Average Sentiment')
+    plt.title('Sentiment Trends Over Years')
+    plt.legend()
+    plt.savefig("test/Sentiment/RateBeer/sentiment_trends.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.show()
+
+
+# Function to visualize cluster profiles
+def plot_cluster_profiles_rb(cluster_keywords):
+    for cluster, keywords in cluster_keywords.items():
+        words, counts = zip(*keywords)
+        plt.figure(figsize=(8, 4))
+        sns.barplot(x=counts, y=words)
+        plt.title(f'Cluster {cluster} Profile')
+        plt.xlabel('Frequency')
+        plt.ylabel('Words')
+        plt.savefig(f"test/Sentiment/RateBeer/ClusterProfiles/clusterprofile_{cluster}.png", dpi=300, bbox_inches='tight', transparent=True)
+        plt.show()
+
+def plot_cluster_profiles_save_rb(cluster_keywords):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.join('test', 'Sentiment', 'RateBeer', 'ClusterProfiles')
+    os.makedirs(output_dir, exist_ok=True)
+
+    for cluster, keywords in cluster_keywords.items():
+        words, counts = zip(*keywords)
+        plt.figure(figsize=(8, 4))
+        sns.barplot(x=counts, y=words)
+        plt.title(f'Cluster {cluster} Profile')
+        plt.xlabel('Frequency')
+        plt.ylabel('Words')
+        
+        # Save the plot to the output directory
+        file_path = os.path.join(output_dir, f'cluster_profile_{cluster}.png')
+        plt.savefig(file_path, bbox_inches='tight')
+        
+        # Optionally, display the plot
+        plt.show()
+
+
+# Function to plot n-grams
+def plot_top_ngrams_rb(ngram_freq, top_n=20):
+    top_ngrams = ngram_freq.head(top_n)
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x='frequency', y='ngram', data=top_ngrams)
+    plt.title(f'Top {top_n} N-Grams')
+    plt.xlabel('Frequency')
+    plt.ylabel('N-Grams')
+    plt.savefig("test/Sentiment/RateBeer/top_ngrams.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.show()
+
+# Function to plot cluster distribution over years
+def plot_cluster_distribution_rb(reviews_df, year_column='year_x', cluster_column='cluster'):
+    cluster_distribution = reviews_df.groupby([year_column, cluster_column]).size().unstack(fill_value=0)
+    
+    cluster_distribution.plot(kind='bar', stacked=True, figsize=(12, 6))
+    plt.title('Cluster Distribution Over Years')
+    plt.xlabel('Year')
+    plt.ylabel('Review Count')
+    plt.legend(title='Cluster')
+    plt.savefig("test/Sentiment/RateBeer/cluster_distribution.png", dpi=300, bbox_inches='tight', transparent=True)
+    plt.show()
