@@ -4,4 +4,13 @@ matplotlib
 seaborn
 scipy
 plotly
-geopandas
+nltk
+deep_translator
+sklearn
+umap
+wordcloud
+textblob
+os
+collections
+concurrent
+re
