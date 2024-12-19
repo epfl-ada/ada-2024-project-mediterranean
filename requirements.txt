@@ -1,0 +1,16 @@
+pandas
+numpy
+matplotlib
+seaborn
+scipy
+plotly
+nltk
+deep_translator
+sklearn
+umap
+wordcloud
+textblob
+os
+collections
+concurrent
+re
