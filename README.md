@@ -134,8 +134,8 @@ The **current** directory structure of new project looks like this:
 │
 ├── src                         <- Source code
 │   ├── data                            <- Data directory: processings notebooks
-│        ├── pre_processing.ipynb             <- Data pre-processing 
-│        └── merging_analysis.ipynb           <- Database merging analysis
+│        ├── pre_processing_.ipynb             <- Data pre-processing files for both datasets
+│        └── merging_analysis.ipynb           <- Database beer merging analysis
 │
 ├── results.ipynb               <- initial analysis and results obtained
 │
