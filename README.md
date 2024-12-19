@@ -136,12 +136,14 @@ The **current** directory structure of new project looks like this:
 │   ├── data                            <- Data directory: processings notebooks
 │        ├── pre_processing_.ipynb             <- Data pre-processing files for both datasets
 │        └── merging_analysis.ipynb           <- Database beer merging analysis
-│
+│        └── utils.py           <- utils with functions for dataset analysis
+│   ├── utils                            <- Utils directory: .py of results code
+│        ├── utilities_beers_analysis.py        <- beers timeline analysis related functions
+│        └── utilities_nlp_analysis.py          <- sentiment analysis related functions
+│   ├── test                            <- Output of all tests done for graphics and plots
 ├── results.ipynb               <- initial analysis and results obtained
-│
-├── utils.py                    <- List of functions used in the project
 ├── .gitignore                  <- List of files ignored by git
-├── pip_requirements.txt        <- File for installing python dependencies
+├── requirements.txt        <- File for installing python dependencies
 └── README.md
 
 ```
